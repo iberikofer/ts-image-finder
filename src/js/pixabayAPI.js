@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class PixabayApi { 
-  #API_KEY = '34734922-71a756c5ae22b2ca14df3cfaf'; 
+  #API_KEY = process.env.PIXABAY_API_KEY; 
   #URL = 'https://pixabay.com/api/'; 
   #PER_PAGE = 40;
   #page = 1; 
