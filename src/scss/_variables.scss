@@ -1,0 +1,40 @@
+// Design Tokens & SCSS Variables
+
+// Colors
+$gradient-header: linear-gradient(135deg, #e55d87 0%, #5fc3e4 100%);
+$color-primary-start: #e55d87;
+$color-primary-end: #5fc3e4;
+$color-accent: #4f91f0;
+$color-accent-hover: #3a7bd5;
+
+$color-text: #212121;
+$color-text-muted: #666666;
+$color-bg: #f8f9fa;
+$color-card-bg: #ffffff;
+$color-button-hover: #f0f0f0;
+$color-border: #e2e8f0;
+
+// Typography
+$font-family-base:
+  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+  Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.5;
+
+// Shadows
+$shadow-header: 0 4px 12px rgba(0, 0, 0, 0.2);
+$shadow-card:
+  0 2px 8px rgba(0, 0, 0, 0.08),
+  0 1px 3px rgba(0, 0, 0, 0.06);
+$shadow-card-hover:
+  0 10px 24px rgba(0, 0, 0, 0.14),
+  0 4px 8px rgba(0, 0, 0, 0.08);
+$shadow-input-focus: 0 0 0 3px rgba(79, 145, 240, 0.45);
+
+// Transitions
+$transition-fast: 150ms ease;
+$transition-normal: 250ms ease;
+
+// Layout
+$header-height: 60px;
+$z-index-header: 100;

@@ -1,0 +1,36 @@
+@use 'variables' as *;
+
+.footer {
+  margin-top: auto;
+  padding: 20px 16px;
+  background-color: $color-card-bg;
+  border-top: 1px solid $color-border;
+  text-align: center;
+  font-size: 14px;
+  color: $color-text-muted;
+
+  &__content {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    @media (min-width: 600px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__link {
+    color: $color-accent;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-accent-hover;
+      text-decoration: underline;
+    }
+  }
+}
