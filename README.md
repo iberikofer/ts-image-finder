@@ -1,4 +1,4 @@
-# 🔍 JS Image Finder
+# 🔍 TS Image Finder
 
 A fast, modern, and accessible image search web application powered by the [Pixabay API](https://pixabay.com/api/docs/). Browse millions of high-quality photos with smooth infinite scroll, interactive lightbox preview, and statistics badges.
 
@@ -64,8 +64,8 @@ Follow these instructions to set up the project locally on your machine.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/iberikofer/js-image-finder.git
-   cd js-image-finder
+   git clone https://github.com/iberikofer/ts-image-finder.git
+   cd ts-image-finder
    ```
 
 2. **Install dependencies:**

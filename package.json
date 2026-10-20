@@ -1,16 +1,16 @@
 {
-  "name": "js-image-finder",
+  "name": "ts-image-finder",
   "version": "2.0.0",
   "description": "Modern responsive image finder web application powered by Pixabay API, SimpleLightbox, and Notiflix.",
-  "homepage": "https://github.com/iberikofer/js-image-finder",
+  "homepage": "https://iberikofer.github.io/ts-image-finder/",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /js-image-finder/",
+    "build": "parcel build src/*.html --public-url /ts-image-finder/",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iberikofer/js-image-finder.git"
+    "url": "git+https://github.com/iberikofer/ts-image-finder.git"
   },
   "keywords": [
     "pixabay",
@@ -24,7 +24,7 @@
   "author": "Yaroslav Sych <sych521@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iberikofer/js-image-finder/issues"
+    "url": "https://github.com/iberikofer/ts-image-finder/issues"
   },
   "dependencies": {
     "axios": "^1.20.0",
