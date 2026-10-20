@@ -5,7 +5,8 @@
   "homepage": "https://github.com/iberikofer/js-image-finder",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /js-image-finder/"
+    "build": "parcel build src/*.html --public-url /js-image-finder/",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
     "simplelightbox",
     "notiflix",
     "parcel",
-    "scss"
+    "scss",
+    "typescript"
   ],
   "author": "Yaroslav Sych <sych521@gmail.com>",
   "license": "MIT",
@@ -32,8 +34,10 @@
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.16.4",
+    "@types/node": "^26.6.5",
     "parcel": "^2.16.4",
-    "parcel-reporter-clean-dist": "^1.0.4"
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "typescript": "^7.0.2"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead"
 }

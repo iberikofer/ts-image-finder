@@ -22,7 +22,7 @@ A fast, modern, and accessible image search web application powered by the [Pixa
 
 | Technology | Purpose |
 | :--- | :--- |
-| **Vanilla JavaScript (ES6+)** | Core client-side logic, API integration, and DOM management |
+| **TypeScript** | Strongly-typed client-side logic, API integration, and DOM management |
 | **SCSS (SASS)** | Modular component styling and design tokens |
 | **Parcel 2** | Zero-config web application bundler & asset optimizer |
 | **Axios** | Promise-based HTTP client for Pixabay API communication |
@@ -96,6 +96,7 @@ Follow these instructions to set up the project locally on your machine.
 | Command | Description |
 | :--- | :--- |
 | `npm start` | Starts the Parcel local development server with Hot Module Replacement (HMR). |
+| `npm run typecheck` | Runs TypeScript compiler in type-check mode (`tsc --noEmit`) to validate types. |
 | `npm run build` | Compiles and optimizes assets into the `dist/` directory ready for production deployment. |
 
 ---

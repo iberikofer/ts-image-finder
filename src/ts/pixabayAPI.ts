@@ -1,59 +1,59 @@
 import axios from 'axios';
+import { PixabayResponse } from '../types/pixabay';
 
 export default class PixabayApi {
-  #API_KEY = process.env.PIXABAY_API_KEY;
-  #URL = 'https://pixabay.com/api/';
-  #PER_PAGE = 40;
-  #page = 1;
-  #query = '';
+  readonly #apiKey: string | undefined = process.env.PIXABAY_API_KEY;
+  readonly #url: string = 'https://pixabay.com/api/';
+  readonly #perPage: number = 40;
+  #page: number = 1;
+  #query: string = '';
 
   constructor() {
-    if (!this.#API_KEY) {
+    if (!this.#apiKey) {
       console.warn(
         'PixabayApi: PIXABAY_API_KEY is not set. Please check your .env configuration.'
       );
     }
   }
 
-  async loadImages(query) {
+  async loadImages(query: string): Promise<PixabayResponse> {
     this.#page = 1;
     this.#query = query.trim();
     return this.#fetch();
   }
 
-  async loadNextImages() {
+  async loadNextImages(): Promise<PixabayResponse> {
     this.#page += 1;
     return this.#fetch();
   }
 
-  resetPage() {
+  resetPage(): void {
     this.#page = 1;
   }
 
-  get page() {
+  get page(): number {
     return this.#page;
   }
 
-  get perPage() {
-    return this.#PER_PAGE;
+  get perPage(): number {
+    return this.#perPage;
   }
 
-  async #fetch() {
-    if (!this.#API_KEY) {
+  async #fetch(): Promise<PixabayResponse> {
+    if (!this.#apiKey) {
       throw new Error(
         'Pixabay API key is missing. Ensure PIXABAY_API_KEY is configured in your .env file.'
       );
     }
 
-    const response = await axios({
-      url: this.#URL,
+    const response = await axios.get<PixabayResponse>(this.#url, {
       params: {
-        key: this.#API_KEY,
+        key: this.#apiKey,
         q: this.#query,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: 'true',
-        per_page: this.#PER_PAGE,
+        per_page: this.#perPage,
         page: this.#page,
       },
     });

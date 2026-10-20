@@ -2,9 +2,10 @@ import 'modern-normalize/modern-normalize.css';
 import './scss/index.scss';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import SimpleLightbox from 'simplelightbox';
-import PixabayApi from './js/pixabayAPI';
-import GalleryCardsBuilder from './js/galleryCardsBuilder';
+import PixabayApi from './ts/pixabayAPI';
+import GalleryCardsBuilder from './ts/galleryCardsBuilder';
 import { Notify } from 'notiflix';
+import { PixabayResponse } from './types/pixabay';
 
 Notify.init({
   width: '320px',
@@ -16,12 +17,30 @@ Notify.init({
   clickToClose: true,
 });
 
-const refs = {
-  form: document.querySelector('#search-form'),
-  input: document.querySelector('.search-form__input'),
-  button: document.querySelector('.search-form__button'),
-  gallery: document.querySelector('#gallery'),
-  loader: document.querySelector('#loader'),
+interface Elements {
+  form: HTMLFormElement;
+  input: HTMLInputElement;
+  button: HTMLButtonElement;
+  gallery: HTMLUListElement;
+  loader: HTMLDivElement;
+}
+
+const form = document.querySelector<HTMLFormElement>('#search-form');
+const input = document.querySelector<HTMLInputElement>('.search-form__input');
+const button = document.querySelector<HTMLButtonElement>('.search-form__button');
+const gallery = document.querySelector<HTMLUListElement>('#gallery');
+const loader = document.querySelector<HTMLDivElement>('#loader');
+
+if (!form || !input || !button || !gallery || !loader) {
+  throw new Error('Required DOM elements were not found in the document.');
+}
+
+const refs: Elements = {
+  form,
+  input,
+  button,
+  gallery,
+  loader,
 };
 
 const pixabay = new PixabayApi();
@@ -33,10 +52,10 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 const scrollObserver = new IntersectionObserver(
-  entries => {
+  (entries: IntersectionObserverEntry[]) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !isLoading && showedImages < totalHits) {
-        loadMoreImages();
+        void loadMoreImages();
       }
     });
   },
@@ -50,13 +69,16 @@ let showedImages = 0;
 let totalHits = 0;
 let isLoading = false;
 
-refs.form.addEventListener('submit', onFormSubmit);
+refs.form.addEventListener('submit', (e: Event) => {
+  void onFormSubmit(e);
+});
 refs.input.addEventListener('input', onInput);
 refs.button.addEventListener('click', onButtonClick);
 refs.button.addEventListener('mouseleave', unfocusButton);
 
-function onInput(event) {
-  const query = event.target.value.trim();
+function onInput(event: Event): void {
+  const target = event.target as HTMLInputElement;
+  const query = target.value.trim();
   if (query) {
     refs.button.removeAttribute('disabled');
   } else {
@@ -64,15 +86,15 @@ function onInput(event) {
   }
 }
 
-function onButtonClick() {
+function onButtonClick(): void {
   refs.button.classList.add('search-form__button--focus');
 }
 
-function unfocusButton() {
+function unfocusButton(): void {
   refs.button.classList.remove('search-form__button--focus');
 }
 
-async function onFormSubmit(event) {
+async function onFormSubmit(event: Event): Promise<void> {
   event.preventDefault();
   const query = refs.input.value.trim();
   if (!query || isLoading) {
@@ -87,12 +109,12 @@ async function onFormSubmit(event) {
   await loadImages(query);
 }
 
-async function loadImages(query) {
+async function loadImages(query: string): Promise<void> {
   isLoading = true;
   refs.loader.classList.remove('loader--hidden');
 
   try {
-    const data = await pixabay.loadImages(query);
+    const data: PixabayResponse = await pixabay.loadImages(query);
 
     if (!data.hits || data.totalHits === 0) {
       refs.loader.classList.add('loader--hidden');
@@ -115,16 +137,18 @@ async function loadImages(query) {
     } else {
       refs.loader.classList.add('loader--hidden');
     }
-  } catch (error) {
+  } catch (error: unknown) {
     refs.loader.classList.add('loader--hidden');
     console.error(error);
-    Notify.failure(error.message || 'An error occurred while fetching images.');
+    const errorMessage =
+      error instanceof Error ? error.message : 'An error occurred while fetching images.';
+    Notify.failure(errorMessage);
   } finally {
     isLoading = false;
   }
 }
 
-async function loadMoreImages() {
+async function loadMoreImages(): Promise<void> {
   if (isLoading || showedImages >= totalHits) {
     return;
   }
@@ -133,7 +157,7 @@ async function loadMoreImages() {
   refs.loader.classList.remove('loader--hidden');
 
   try {
-    const data = await pixabay.loadNextImages();
+    const data: PixabayResponse = await pixabay.loadNextImages();
 
     if (!data.hits || data.hits.length === 0) {
       refs.loader.classList.add('loader--hidden');
@@ -153,7 +177,7 @@ async function loadMoreImages() {
       stopObserver();
       Notify.info("We're sorry, but you've reached the end of search results.");
     }
-  } catch (error) {
+  } catch (error: unknown) {
     refs.loader.classList.add('loader--hidden');
     console.error(error);
     Notify.failure('Failed to load more images. Please check your connection.');
@@ -162,15 +186,15 @@ async function loadMoreImages() {
   }
 }
 
-function buildGallery(data) {
+function buildGallery(data: PixabayResponse): void {
   refs.gallery.innerHTML = builder.buildCards(data.hits);
 }
 
-function appendGallery(data) {
+function appendGallery(data: PixabayResponse): void {
   refs.gallery.insertAdjacentHTML('beforeend', builder.buildCards(data.hits));
 }
 
-function smoothScroll() {
+function smoothScroll(): void {
   const firstCard = refs.gallery.firstElementChild;
   if (!firstCard) {
     return;
@@ -182,10 +206,10 @@ function smoothScroll() {
   });
 }
 
-function startObserver() {
+function startObserver(): void {
   scrollObserver.observe(refs.loader);
 }
 
-function stopObserver() {
+function stopObserver(): void {
   scrollObserver.unobserve(refs.loader);
 }

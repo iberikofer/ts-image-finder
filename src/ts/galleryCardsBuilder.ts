@@ -1,9 +1,11 @@
+import { PixabayHit } from '../types/pixabay';
+
 export default class GalleryCardsBuilder {
-  buildCards(cardsData) {
+  buildCards(cardsData: PixabayHit[]): string {
     return cardsData.map(card => this.buildCard(card)).join('');
   }
 
-  buildCard(cardData) {
+  buildCard(cardData: PixabayHit): string {
     const escapedTags = this.#escapeHtml(cardData.tags || 'Photo');
     const likes = Number(cardData.likes || 0).toLocaleString();
     const views = Number(cardData.views || 0).toLocaleString();
@@ -39,7 +41,7 @@ export default class GalleryCardsBuilder {
     `;
   }
 
-  #escapeHtml(str) {
+  #escapeHtml(str: string): string {
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/"/g, '&quot;')
