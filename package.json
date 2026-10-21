@@ -4,6 +4,7 @@
   "description": "Modern responsive image finder web application powered by Pixabay API, SimpleLightbox, and Notiflix.",
   "homepage": "https://iberikofer.github.io/ts-image-finder/",
   "scripts": {
+    "dev": "parcel src/*.html",
     "start": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /ts-image-finder/",
     "typecheck": "tsc --noEmit"
